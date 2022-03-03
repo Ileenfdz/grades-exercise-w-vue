@@ -1,5 +1,5 @@
 <template>
-  <div id="componente">
+  <div id="componente" class="componente-notas">
     <h1>Resultado académico</h1>
     <div class="div">
       <label for="nombre">Introduzca su nombre</label>
@@ -38,14 +38,19 @@
     </div>
 
     <div class="div">
-      <button @click="calificacion">Enviar</button>
+      <button @click="getStudent">Enviar</button>
     </div>
-
-    <div id="res">
-      <p>{{ messageError }}</p>
-      <p>{{ messageNombre }}</p>
-      <p>{{ messageMateria }}</p>
-      <p>{{ messageNota }}</p>
+    <p>{{ messageError }}</p>
+    <!-- v-for="student in students" :key="student.id"> -->
+    <div>
+      <p name="nombre">{{ messageNombre }}</p>
+      <p name="materia">{{ messageMateria }}</p>
+      <p name="nota">{{ messageNota }}</p>
+      <!-- <p v-for="messageError in messageError">{{ messageError }}</p>
+      <p v-for="messageError in messageError">{{ messageNombre }}</p>
+      <p v-for="messageMateria in messageMateria">{{ messageMateria }}</p>
+      <p v-for="messageNota in messageNota">{{ messageNota }}</p>
+     -->
     </div>
   </div>
 </template>
@@ -65,27 +70,36 @@ export default {
     nota: "",
     nombre: "",
     materia: "",
-    messageNombre: "",
-    messageMateria: "",
-    messageNota: "",
     messageError: "",
+    messageNombre: "",
+    messageNota: "",
+    messageMateria: "",
   }),
   methods: {
-    calificacion() {
+    getStudent() {
       let nota = this.nota;
       let nombre = this.nombre;
       let materia = this.materia;
 
-      if (nombre == 0 || materia == 0 || nota == 0) {
+      if (nombre == 0 || materia == 0 || nota == null) {
         this.messageError = "No ha completado los datos";
+        this.messageNombre = " ";
+        this.messageNota = " ";
+        this.messageMateria = " ";
       } else if (!isNaN(nombre)) {
-        this.messageNombre = "";
+        this.messageNombre = " ";
+        this.messageNota = " ";
+        this.messageMateria = " ";
         this.messageError = "Escriba un nombre válido";
       } else if (!isNaN(materia)) {
-        this.messageMateria = "";
+        this.messageNombre = " ";
+        this.messageNota = " ";
+        this.messageMateria = " ";
         this.messageError = "Escriba una materia válida";
       } else if (nota < 0 || nota > 10 || isNaN(nota)) {
-        this.messageMateria = "";
+        this.messageNombre = " ";
+        this.messageNota = " ";
+        this.messageMateria = " ";
         this.messageError = "Escriba una nota válida entre el 0 y el 10";
       } else {
         this.messageError = "";
